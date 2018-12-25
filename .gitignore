@@ -1,0 +1,5 @@
+exports.sh
+NOTES.md
+*.crt
+*.key
+*.cert

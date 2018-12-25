@@ -1,0 +1,206 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dcrstakepool-nginx
+  labels:
+    app: dcrstakepool-nginx
+    tier: frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
+  selector:
+    app: dcrstakepool-nginx
+    tier: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dcrstakepool-node
+  labels:
+    app: dcrstakepool-node
+    tier: backend
+spec:
+  ports:
+    - port: 8000
+  selector:
+    app: dcrstakepool-node
+    tier: backend
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcrstakepool-nginx
+  labels:
+    app: dcrstakepool-nginx
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dcrstakepool-nginx
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: dcrstakepool-nginx
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx
+        image: oswald/nginx:latest
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: secret-volume
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume
+        command: ['sh', '-c']
+        args:
+          - /home/auto-reload-nginx.sh
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: nginxsecret
+      - name: configmap-volume
+        configMap:
+          name: nginxconfigmap
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dcrstakepool-node
+  labels:
+    app: dcrstakepool-node
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dcrstakepool-node
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: dcrstakepool-node
+        tier: backend
+    spec:
+      containers:
+      - name: dcrstakepool
+        image: oswald/dcrstakepool:latest
+        ports:
+        - containerPort: 8000
+        command: ['sh', '-c']
+        args:
+          - sh /usr/local/bin/dcrstakepool/dcrstakepool-boot.sh
+        env:
+        - name: TESTNET
+          valueFrom:
+            configMapKeyRef:
+              name: testnet-config
+              key: testnet
+        - name: COLD_WALLET_EXT_PUB
+          valueFrom:
+            secretKeyRef:
+              name: coldwalletextpub
+              key: coldwalletextpub
+        - name: API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: api-secret
+              key: token
+        - name: COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: cookie-secret
+              key: token
+        - name: STAKEPOOL_MYSQL_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: stakepool-mysql-pass
+              key: password
+        - name: ADMIN_IPS
+          valueFrom:
+            configMapKeyRef:
+              name: admin-ips
+              key: ips
+        - name: ADMIN_IDS
+          valueFrom:
+            configMapKeyRef:
+              name: admin-ids
+              key: ids
+        - name: VOTING_EXT_PUB
+          valueFrom:
+            secretKeyRef:
+              name: votingwalletextpub
+              key: votingextpub
+        - name: WALLET_HOSTS
+          valueFrom:
+            configMapKeyRef:
+              name: wallet-hosts
+              key: hosts
+        - name: WALLET_CERTS
+          valueFrom:
+            configMapKeyRef:
+              name: wallet-certs
+              key: certs
+        - name: STAKEPOOL_CERTS
+          valueFrom:
+            configMapKeyRef:
+              name: stakepool-certs
+              key: certs
+        - name: POOL_EMAIL
+          valueFrom:
+            configMapKeyRef:
+              name: pool-email
+              key: poolemail
+        - name: POOL_LINK
+          valueFrom:
+            configMapKeyRef:
+              name: pool-link
+              key: poollink
+        - name: SMTP_FROM
+          valueFrom:
+            configMapKeyRef:
+              name: smtp-from
+              key: smtpfrom
+        - name: SMTP_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: smtp-host
+              key: smtphost
+        - name: SMTP_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: smtp-username
+              key: smtpusername
+        - name: SMTP_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: smtp-password
+              key: smtppassword
+        - name: DCR_RPC_USER
+          valueFrom:
+            secretKeyRef:
+              name: rpc-user
+              key: user
+        - name: DCR_RPC_PASS
+          valueFrom:
+            secretKeyRef:
+              name: rpc-pass
+              key: password
+        volumeMounts:
+          - name: dcrstakepool-bootscript
+            mountPath: /usr/local/bin/dcrstakepool
+      volumes:
+      - name: dcrstakepool-bootscript
+        configMap:
+          name: dcrstakepool-bootscript

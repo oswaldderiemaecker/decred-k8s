@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stakepoold-node
+  labels:
+    app: stakepoold-node
+spec:
+  ports:
+    - port: 9110
+      name: json-rpc
+    - port: 9111
+      name: grpc
+    - port: 19110
+      name: testnet-json
+    - port: 19111
+      name: testnet-grpc
+    - port: 19113
+      name: testnet-stakepoold
+  selector:
+    app: stakepoold-node
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stakepoold-node
+  labels:
+    app: stakepoold-node
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stakepoold-node
+  template:
+    metadata:
+      labels:
+        app: stakepoold-node
+    spec:
+      containers:
+        - name: stakepoold
+          image: oswald/stakepoold:latest
+          resources:
+            limits:
+              memory: "2Gi"
+          env:
+          - name: DCR_RPC_USER
+            valueFrom:
+              secretKeyRef:
+                name: rpc-user
+                key: user
+          - name: DCR_RPC_PASS
+            valueFrom:
+              secretKeyRef:
+                name: rpc-pass
+                key: password
+          - name: PRIVATE_WALLET_PASS
+            valueFrom:
+              secretKeyRef:
+                name: wallet-pass
+                key: privatewalletpass
+          - name: COLD_WALLET_EXT_PUB
+            valueFrom:
+              secretKeyRef:
+                name: coldwalletextpub
+                key: coldwalletextpub
+          - name: TESTNET
+            valueFrom:
+              configMapKeyRef:
+                name: testnet-config
+                key: testnet
+          - name: STAKEPOOL_MYSQL_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: stakepool-mysql-pass
+                key: password
+          volumeMounts:
+            - name: voting-wallet-persistent-storage
+              mountPath: /root/.dcrwallet/
+            - name: dcrd-persistent-storage
+              mountPath: /root/.dcrd/
+            - name: stakepoold-bootscript
+              mountPath: /usr/local/bin/stakepoold
+          command: ['sh', '-c']
+          args: 
+            - sh /usr/local/bin/stakepoold/stakepool-boot.sh
+      volumes:
+        - name: voting-wallet-persistent-storage
+          emptyDir: {}
+        - name: dcrd-persistent-storage
+          emptyDir: {}
+        - name: stakepoold-bootscript
+          configMap:
+            name: stakepoold-bootscript

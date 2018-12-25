@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: dcrstakepool-mysql
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: dcrstakepool-mysql
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: dcrstakepool-mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: dcrstakepool-mysql
+  labels:
+    app: dcrstakepool-mysql
+spec:
+  serviceName: mysql
+  selector:
+    matchLabels:
+      app: dcrstakepool-mysql
+      tier: mysql
+  template:
+    metadata:
+      labels:
+        app: dcrstakepool-mysql
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        - name: STAKEPOOL_MYSQL_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: stakepool-mysql-pass
+              key: password
+        command: ['sh', '-c']
+        args:
+          - sh /usr/local/bin/mysql-bootscript/mysql-bootscript.sh
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        - name: mysql-bootstrap
+          mountPath: /root/mysql-bootstrap
+        - name: mysql-bootscript
+          mountPath: /usr/local/bin/mysql-bootscript
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: mysql-bootstrap
+        configMap:
+          name: mysql-bootstrap
+      - name: mysql-bootscript
+        configMap:
+          name: mysql-bootscript
