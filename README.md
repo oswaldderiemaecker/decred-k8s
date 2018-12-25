@@ -1,0 +1,1 @@
+# dcrstakepool-k8s
