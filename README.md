@@ -8,11 +8,13 @@
 
 * minikube version: v0.31.0
 * Docker version 18.09.0, build 4d60db4
+* Kubernetes Client Version: v1.13.1
+* Kubernetes Server Version: v1.10.0
 
 # Development Environment
 
 ```bash
-minikube start --cpus 4 --memory 4096
+minikube start --cpus 4 --memory 4096 --disk-size 30GB
 ```
 ## Configuration
 
@@ -116,7 +118,7 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 
 # Next Steps
 
-* Next step, try with StatefulSet Deployment.
+* When there is sleep, implement state verification instead
 * Deployment on AWS
 
 # Issue Tracker
@@ -125,4 +127,5 @@ The integrated [github issue](https://github.com/oswaldderiemaecker/dcrstakepool
 
 # Version History
 
+* 0.1.1  Changed to Statefulset
 * 0.1.0  Initial release for development in testnet operations

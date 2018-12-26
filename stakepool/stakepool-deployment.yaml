@@ -42,7 +42,7 @@ spec:
           image: oswald/stakepoold:latest
           resources:
             limits:
-              memory: "2Gi"
+              memory: "1Gi"
           env:
           - name: DCR_RPC_USER
             valueFrom:

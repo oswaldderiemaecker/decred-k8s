@@ -15,7 +15,7 @@ apply(){
   echo "Deleting dcrstakepool pod"
   kubectl delete pod $dcrstakepool_pod
 
-  sleep 15
+  sleep 50
   dcrstakepool_upload_cert
 
   echo "Done"
@@ -51,6 +51,7 @@ dcrstakepool_upload_cert(){
 }
 
 dcrstakepool_update_config(){
+  sleep 30
   echo "Processing Wallets Hosts ..."
   stakepoold_node_ips=$(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[*].status.podIP}" | sed -e "s/ /,/g" )
   kubectl delete configmap wallet-hosts
