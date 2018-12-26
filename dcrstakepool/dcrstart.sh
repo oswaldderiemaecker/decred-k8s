@@ -81,7 +81,7 @@ dcrstakepool_update_config(){
 }
 
 init(){
-  source ./exports.sh
+  source ./variables.sh
 
   echo "Setting DCRStakepool"
   if [ ! -f dcrpoolstake.key ]; then
