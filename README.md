@@ -4,6 +4,10 @@
 
 [dcrstakepool](https://github.com/decred/dcrstakepool) is a web application which coordinates generating 1-of-2 multisig addresses on a pool of dcrwallet servers so users can purchase proof-of-stake tickets on the Decred network and have the pool of wallet servers vote on their behalf when the ticket is selected.
 
+This repo is to install the Decred Stakepool using Kubernetes and provide development and production environments.
+
+Refer to the [DEVELOPMENT.md](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/DEVELOPMENT.md) for the Ticket Purchasing testing.
+
 # Requirements
 
 * minikube version: v0.31.0
