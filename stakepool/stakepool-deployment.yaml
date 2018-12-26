@@ -21,12 +21,13 @@ spec:
   clusterIP: None
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: stakepoold-node
   labels:
     app: stakepoold-node
 spec:
+  serviceName: stakepoold-node
   replicas: 2
   selector:
     matchLabels:

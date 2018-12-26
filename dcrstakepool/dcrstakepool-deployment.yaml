@@ -34,13 +34,14 @@ spec:
   clusterIP: None
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: dcrstakepool-nginx
   labels:
     app: dcrstakepool-nginx
     tier: frontend
 spec:
+  serviceName: nginx
   replicas: 1
   selector:
     matchLabels:
@@ -75,13 +76,14 @@ spec:
           name: nginxconfigmap
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: dcrstakepool-node
   labels:
     app: dcrstakepool-node
     tier: backend
 spec:
+  serviceName: dcrstakepool-node
   replicas: 1
   selector:
     matchLabels:
