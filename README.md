@@ -1,4 +1,4 @@
-**Experimental - Under Development - Use at your own risk**
+#**Experimental - Under Development - Use at your own risk**
 
 # Decred Stake Pool Kubernetes
 
@@ -65,7 +65,7 @@ For each pods run:
 kubectl exec -ti stakepoold-node-X -- sh -c '/go/bin/dcrwallet --create $TESTNET'
 ```
 
-IMPORTANT NOTE: If its a first install, create the wallet with a new seed on the first stakepool pod, then on the second when asked if you like to use an existing wallet seed, provide the wallet seed created on the first one. For subsequant install you can use the wallet seed for all your stakepool node. Keep the wallet seed securly.
+**IMPORTANT NOTE:** If its a first install, create the wallet with a new seed on the first stakepool pod, then on the second when asked if you like to use an existing wallet seed, provide the wallet seed created on the first one. For subsequant install you can use the wallet seed for all your stakepool node. Keep the wallet seed securly.
 
 One the wallets setup on each stakepool pods, you will need to update the configuration with:
 
