@@ -1,0 +1,100 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cold-wallet
+  namespace: cold-wallet
+  labels:
+    app: cold-wallet
+spec:
+  ports:
+    - port: 9108
+      name: p2p-port
+    - port: 9109
+      name: rpc-port
+    - port: 19108
+      name: testnet-p2p-port
+    - port: 19109
+      name: testnet-rpc-port
+  selector:
+    app: cold-wallet
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cold-wallet-pv-claim
+  namespace: cold-wallet
+  labels:
+    app: cold-wallet
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dcrd-pv-claim
+  namespace: cold-wallet
+  labels:
+    app: dcrd-wallet
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cold-wallet
+  namespace: cold-wallet
+  labels:
+    app: cold-wallet
+spec:
+  serviceName: cold-wallet
+  selector:
+    matchLabels:
+      app: cold-wallet
+  template:
+    metadata:
+      labels:
+        app: cold-wallet
+    spec:
+      containers:
+        - name: cold-wallet
+          image: oswald/dcrwallet:latest
+          env:
+          - name: RPC_USER
+            valueFrom:
+              secretKeyRef:
+                name: rpc-user
+                key: user
+          - name: RPC_PASS
+            valueFrom:
+              secretKeyRef:
+                name: rpc-pass
+                key: password
+          - name: TESTNET
+            valueFrom:
+              configMapKeyRef:
+                name: testnet-config
+                key: testnet
+          volumeMounts:
+            - name: cold-wallet-persistent-storage
+              mountPath: /root/.dcrwallet/
+            - name: dcrd-persistent-storage
+              mountPath: /root/.dcrd/
+          command: ['sh', '-c']
+          args: 
+            - dcrd -u $DCR_RPC_USER -P $DCR_RPC_PASS $TESTNET 
+      volumes:
+        - name: cold-wallet-persistent-storage
+          persistentVolumeClaim:
+            claimName: cold-wallet-pv-claim
+        - name: dcrd-persistent-storage
+          persistentVolumeClaim:
+            claimName: dcrd-pv-claim

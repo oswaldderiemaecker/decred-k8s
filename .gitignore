@@ -3,3 +3,5 @@ NOTES.md
 *.crt
 *.key
 *.cert
+seed*
+*seed*
