@@ -1,4 +1,4 @@
-#**Experimental - Under Development - Use at your own risk**
+# **Experimental - Under Development - Use at your own risk**
 
 # Decred Stake Pool Kubernetes
 
