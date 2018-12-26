@@ -28,5 +28,8 @@ dcrctl --wallet $TESTNET -u test -P test --rpcserver=$(hostname --ip-address) ge
 sleep 15
 echo "$(date) - Starting Stake pool"
 
+# Set the Readiness Probe test
+touch /root/alive.txt
+
 #sleep 40000 #debug
 stakepoold --dbhost=mysql --dbuser=stakepool --dbpassword=$STAKEPOOL_MYSQL_DB_PASSWORD --coldwalletextpub=$COLD_WALLET_EXT_PUB --dcrdhost=127.0.0.1 --dcrduser=$DCR_RPC_USER --dcrdpassword=$DCR_RPC_PASS --testnet --dcrdcert=../.dcrd/rpc.cert --wallethost=$(hostname --ip-address) --walletcert=../.dcrwallet/rpc.cert --walletuser=$DCR_RPC_USER --walletpassword=$DCR_RPC_PASS --rpclisten=$(hostname --ip-address) $TESTNET

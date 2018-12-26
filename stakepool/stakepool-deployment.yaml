@@ -40,6 +40,13 @@ spec:
       containers:
         - name: stakepoold
           image: oswald/stakepoold:latest
+          readinessProbe:
+            exec:
+              command:
+              - test
+              - '`find /root/alive.txt -mmin -1`'
+            initialDelaySeconds: 5
+            periodSeconds: 15
           resources:
             limits:
               memory: "1Gi"

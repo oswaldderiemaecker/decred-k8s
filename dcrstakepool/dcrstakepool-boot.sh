@@ -37,4 +37,9 @@ do
   sleep 10
 done
 
+sleep 10
+
+# Set Readyness Probe Test
+touch /root/alive.txt
+
 dcrstakepool --coldwalletextpub=$COLD_WALLET_EXT_PUB --apisecret=$API_SECRET --cookiesecret=$COOKIE_SECRET --dbpassword=$STAKEPOOL_MYSQL_DB_PASSWORD --dbhost=mysql --adminips=$ADMIN_IPS --adminuserids=$ADMIN_IDS --votingwalletextpub=$VOTING_WALLET_EXT_PUB --wallethosts=$WALLET_HOSTS --walletcerts=$WALLET_CERTS --walletusers=$DCRSTAKE_POOL_DCR_RPC_USER --walletpasswords=$DCRSTAKE_POOL_DCR_RPC_PASS --maxvotedage=8640 --poolfees=7.5 --stakepooldhosts=$WALLET_HOSTS --stakepooldcerts=$STAKEPOOL_CERTS --poolemail=$POOL_EMAIL --poollink=$POOL_LINK --smtpfrom=$SMTP_FROM --smtphost=$SMTP_HOST --smtpusername=$SMTP_USERNAME --smtppassword=$SMTP_PASSWORD $TESTNET

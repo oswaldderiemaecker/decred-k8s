@@ -116,6 +116,10 @@ Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Po
 ./dcrstart.sh --apply
 ```
 
+# Deploying the infrastructure on AWS
+
+Follow the [AWS](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/AWS.md) instructions.
+
 # Contribution
 
 All comments and contribution are welcome. You can contact me at oswald@continuous.lu

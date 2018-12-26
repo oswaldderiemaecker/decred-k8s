@@ -46,6 +46,10 @@ spec:
       containers:
       - image: mysql:5.7
         name: mysql
+        readinessProbe:
+          initialDelaySeconds: 5
+          tcpSocket:
+            port: 3306
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
