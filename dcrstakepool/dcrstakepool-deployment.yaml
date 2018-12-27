@@ -61,8 +61,8 @@ spec:
         - containerPort: 443
         livenessProbe:
           httpGet:
-            path: localhost/
-            port: 443
+            path: /
+            port: 80
           initialDelaySeconds: 30
           timeoutSeconds: 1
           periodSeconds: 15
