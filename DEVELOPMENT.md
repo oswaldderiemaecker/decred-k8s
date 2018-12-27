@@ -35,11 +35,11 @@ kubectl exec -ti cold-wallet-0 -n cold-wallet -- /bin/bash
 Create a Decred Address.
 
 ```bash
-dcrctl --wallet -u $RPC_USER -P $RPC_PASS --testnet getaccountaddress "default"
+dcrctl --wallet -u $RPC_USER -P $RPC_PASS $TESTNET getaccountaddress "default"
 ```
 
 ```bash
-dcrctl --wallet -u $RPC_USER -P $RPC_PASS --testnet getbalance
+dcrctl --wallet -u $RPC_USER -P $RPC_PASS $TESTNET getbalance
 ```
 
 Goto the [Decred Faucet](https://faucet.decred.org/) site, paste in your account address.
@@ -47,7 +47,7 @@ Goto the [Decred Faucet](https://faucet.decred.org/) site, paste in your account
 ## Submit the Address to the Decred Stakepool
 
 ```bash
-dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet validateaddress YOUR_ACCOUNT_ADDRESS
+dcrctl -u $RPC_USER -P $RPC_PASS $TESTNET --wallet validateaddress YOUR_ACCOUNT_ADDRESS
 ```
 
 Get the public key address (pubkeyaddr) and paste it in the Address / Submit Address page of the Decred Stakepool.
@@ -55,7 +55,7 @@ Get the public key address (pubkeyaddr) and paste it in the Address / Submit Add
 Verify that your public key address belongs to your wallet.
 
 ```bash
-dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet validateaddress YOUR_PUBLIC_KEY_ADDRESS
+dcrctl -u $RPC_USER -P $RPC_PASS $TESTNET --wallet validateaddress YOUR_PUBLIC_KEY_ADDRESS
 ```
 
 In the result, you will see fields such as "ismine" and "account" if the address is present.
@@ -69,11 +69,11 @@ Your multisignature script for delegating votes has been generated.
 Import it locally into your wallet using dcrctl for safe keeping, so you can recover your funds and vote in the unlikely event of a pool failure:
 
 ```bash
-dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet importscript YOUR_MULTISIGNATURE
+dcrctl -u $RPC_USER -P $RPC_PASS $TESTNET --wallet importscript YOUR_MULTISIGNATURE
 ```
 
 You can now Manual purchasing Tickets (see step 3/B).
 
 ```
-dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet purchaseticket "default" 100 1 YOUR_TICKET_ADDRESS 1 THE_POOL_ADDRESS 7.5
+dcrctl -u $RPC_USER -P $RPC_PASS $TESTNET --wallet purchaseticket "default" 100 1 YOUR_TICKET_ADDRESS 1 THE_POOL_ADDRESS 7.5
 ```

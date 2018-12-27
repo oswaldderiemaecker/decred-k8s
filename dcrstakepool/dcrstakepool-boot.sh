@@ -37,7 +37,7 @@ do
   sleep 10
 done
 
-sleep 10
+sleep 20
 
 # Set Readyness Probe Test
 touch /root/alive.txt

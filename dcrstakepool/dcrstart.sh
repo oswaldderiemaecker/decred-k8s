@@ -15,7 +15,7 @@ apply(){
   echo "Deleting dcrstakepool pod"
   kubectl delete pod $dcrstakepool_pod
 
-  sleep 50
+  sleep 30
   dcrstakepool_upload_cert
 
   echo "Done"

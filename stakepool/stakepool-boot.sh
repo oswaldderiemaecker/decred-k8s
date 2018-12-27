@@ -2,7 +2,7 @@
 
 # Starting DCRD
 echo "$(date) - Starting Decred Daemon"
-dcrd -u $DCR_RPC_USER -P $DCR_RPC_PASS $TESTNET &
+dcrd -u $DCR_RPC_USER -P $DCR_RPC_PASS --txindex $TESTNET &
 sleep 40
 
 # Wait while Wallet created

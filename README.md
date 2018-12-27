@@ -111,7 +111,20 @@ minikube service list
 Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Pool site.
 Note: You may have to wait a minute.
 
-## Applying changes to your infrastructure
+## Scaling the Stakepool
+
+```bash
+kubectl get statefulsets stakepoold-node
+kubectl scale statefulsets stakepoold-node --replicas=YOUR_NUMBER_OF_REPLICAS
+```
+
+Create the wallet on the new replica.
+
+```bash
+kubectl exec -ti stakepoold-node-X -- sh -c '/go/bin/dcrwallet --create $TESTNET'
+```
+
+Applying changes to your infrastructure
 
 ```bash
 ./dcrstart.sh --apply
