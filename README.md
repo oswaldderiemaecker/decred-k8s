@@ -22,7 +22,7 @@ minikube start --cpus 4 --memory 4096 --disk-size 30GB
 ```
 ## Configuration
 
-Create a file exports.sh based on the [sample_variables.sh](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/dcrstakepool/sample_variables.sh) and set the value.
+Create a file variables.sh based on the [sample_variables.sh](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/dcrstakepool/sample_variables.sh) and set the value.
 
 ## Building the docker images
 
