@@ -77,3 +77,9 @@ You can now Manual purchasing Tickets (see step 3/B).
 ```
 dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet purchaseticket "default" 100 1 YOUR_TICKET_ADDRESS 1 THE_POOL_ADDRESS 7.5
 ```
+
+You may have to unlock your wallet:
+
+```bash
+promptsecret | dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet walletpassphrase - 0
+```
