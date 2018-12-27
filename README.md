@@ -109,6 +109,7 @@ minikube service list
 ```
 
 Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Pool site.
+Note: You may have to wait a minute.
 
 ## Applying changes to your infrastructure
 
