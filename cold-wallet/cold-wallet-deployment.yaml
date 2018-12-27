@@ -90,7 +90,7 @@ spec:
               mountPath: /root/.dcrd/
           command: ['sh', '-c']
           args: 
-            - dcrd -u $DCR_RPC_USER -P $DCR_RPC_PASS $TESTNET 
+            - dcrd -u $RPC_USER -P $RPC_PASS $TESTNET 
       volumes:
         - name: cold-wallet-persistent-storage
           persistentVolumeClaim:
