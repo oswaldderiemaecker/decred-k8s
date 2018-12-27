@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dcrdata
+  labels:
+    app: dcrdata
+spec:
+  type: NodePort
+  ports:
+    - port: 7777
+      name: dcrdata
+  selector:
+    app: dcrdata
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dcrd-dcrdata-pv-claim
+  labels:
+    app: dcrdata
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dcrdata-pv-claim
+  labels:
+    app: dcrdata
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dcrdata
+  labels:
+    app: dcrdata
+spec:
+  serviceName: dcrdata
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dcrdata
+  template:
+    metadata:
+      labels:
+        app: dcrdata
+    spec:
+      containers:
+        - name: dcrdata
+          image: oswald/dcrdata:latest
+          readinessProbe:
+            exec:
+              command:
+              - test
+              - '`find /home/decred/alive.txt -mmin -1`'
+            initialDelaySeconds: 5
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: "2"
+            #limits:
+              #memory: "7G"
+              #memory: "2G"
+          env:
+          - name: RPC_USER
+            valueFrom:
+              secretKeyRef:
+                name: rpc-user
+                key: user
+          - name: RPC_PASS
+            valueFrom:
+              secretKeyRef:
+                name: rpc-pass
+                key: password
+          - name: TESTNET
+            valueFrom:
+              configMapKeyRef:
+                name: testnet-config
+                key: testnet
+          volumeMounts:
+            - name: dcrdata-persistent-storage
+              mountPath: /home/decred/.dcrdata/
+            - name: dcrd-dcrdata-persistent-storage
+              mountPath: /home/decred/.dcrd/
+            - name: dcrdata-bootscript
+              mountPath: /usr/local/bin/dcrdata-bootscript
+          command: ['sh', '-c']
+          args: 
+            - sh /usr/local/bin/dcrdata-bootscript/dcrdata-bootscript.sh
+      volumes:
+        - name: dcrdata-persistent-storage
+          persistentVolumeClaim:
+            claimName: dcrdata-pv-claim
+        - name: dcrd-dcrdata-persistent-storage
+          persistentVolumeClaim:
+            claimName: dcrd-dcrdata-pv-claim
+        - name: dcrdata-bootscript
+          configMap:
+            name: dcrdata-bootscript
