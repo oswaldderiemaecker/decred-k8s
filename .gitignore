@@ -5,3 +5,4 @@ NOTES.md
 *.cert
 seed*
 *seed*
+variables.sh
