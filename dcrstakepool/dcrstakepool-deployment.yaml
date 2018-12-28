@@ -109,7 +109,7 @@ spec:
           exec:
             command:
             - test
-            - '`find /root/alive.txt -mmin -1`'
+            - '`find /home/decred/alive -mmin -1`'
           initialDelaySeconds: 5
           periodSeconds: 15
         ports:

@@ -29,13 +29,13 @@ dcrstakepool_upload_cert(){
   do
     echo $pod
     echo "Getting Wallet Certs"
-    kubectl cp $pod:/root/.dcrwallet/rpc.cert ./certs/dcrwallet/$pod.cert
-    kubectl cp ./certs/dcrwallet/$pod.cert $dcrstakepool_pod:/root/certs/dcrwallet/$pod.cert
+    kubectl cp $pod:/home/decred/.dcrwallet/rpc.cert ./certs/dcrwallet/$pod.cert
+    kubectl cp ./certs/dcrwallet/$pod.cert $dcrstakepool_pod:/home/decred/certs/dcrwallet/$pod.cert
     echo "Getting Pool Stake Certs"
-    kubectl cp $pod:/root/.stakepoold/rpc.cert ./certs/stakepoold/$pod.cert
-    kubectl cp ./certs/stakepoold/$pod.cert $dcrstakepool_pod:/root/certs/stakepoold/$pod.cert
-    wallet_certs=$wallet_certs"/root/certs/dcrwallet/$pod.cert "
-    stakepool_certs=$stakepool_certs"/root/certs/stakepoold/$pod.cert "
+    kubectl cp $pod:/home/decred/.stakepoold/rpc.cert ./certs/stakepoold/$pod.cert
+    kubectl cp ./certs/stakepoold/$pod.cert $dcrstakepool_pod:/home/decred/certs/stakepoold/$pod.cert
+    wallet_certs=$wallet_certs"/home/decred/certs/dcrwallet/$pod.cert "
+    stakepool_certs=$stakepool_certs"/home/decred/certs/stakepoold/$pod.cert "
   done
   kubectl delete configmap wallet-certs
   kubectl create configmap wallet-certs --from-literal=certs=$(echo $wallet_certs | sed -e "s/ /,/g")
@@ -58,7 +58,7 @@ dcrstakepool_update_config(){
   kubectl create configmap wallet-hosts --from-literal=hosts=$stakepoold_node_ips
 
   echo "Getting Wallet Extended Public Key"
-  votingwalletextpub=$(kubectl exec -ti $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[0].metadata.name}") -c stakepoold -- /bin/bash -c '/go/bin/dcrctl --wallet $TESTNET -u test -P test --rpcserver=$(hostname --ip-address) getmasterpubkey default')
+  votingwalletextpub=$(kubectl exec -ti $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[0].metadata.name}") -c stakepoold -- /bin/bash -c '/home/decred/go/bin/dcrctl --wallet $TESTNET -u test -P test --rpcserver=$(hostname --ip-address) getmasterpubkey default')
 
   kubectl delete secret votingwalletextpub
   kubectl create secret generic votingwalletextpub --from-literal=votingextpub=$votingwalletextpub
@@ -71,8 +71,8 @@ dcrstakepool_update_config(){
   for pod in $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[*].metadata.name}")
   do
     echo $pod
-    wallet_certs=$wallet_certs"/root/certs/dcrwallet/$pod.cert "
-    stakepool_certs=$stakepool_certs"/root/certs/stakepoold/$pod.cert "
+    wallet_certs=$wallet_certs"/home/decred/certs/dcrwallet/$pod.cert "
+    stakepool_certs=$stakepool_certs"/home/decred/certs/stakepoold/$pod.cert "
   done
   kubectl delete configmap wallet-certs
   kubectl create configmap wallet-certs --from-literal=certs=$(echo $wallet_certs | sed -e "s/ /,/g")
@@ -201,4 +201,3 @@ esac
 done
 
 exit 0
-

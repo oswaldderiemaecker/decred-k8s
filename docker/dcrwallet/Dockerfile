@@ -1,23 +1,31 @@
 FROM golang:1.11.1
 
-WORKDIR /go/src/app
-RUN git clone https://github.com/decred/dcrd.git
+RUN apt-get update ; apt-get install -y dnsutils wget telnet screen; apt-get clean
 
-WORKDIR /go/src/app/dcrd
+RUN useradd -s /bin/bash -m -d /home/decred decred && chown -R decred:decred /home/decred
+ENV GOPATH=/home/decred/go
+ENV PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$GOPATH/bin
+ENV DCRSRC_PATH=$GOPATH/src/github.com/decred/
+RUN mkdir -p $GOPATH/src/github.com/decred/
+RUN chown -R decred:decred $GOPATH
+USER decred
+
+WORKDIR $DCRSRC_PATH
+RUN git clone https://github.com/decred/dcrd.git
+WORKDIR $DCRSRC_PATH/dcrd
 
 ENV GO111MODULE=on
 RUN go get -d -v ./...
 RUN go install . ./cmd/...
 
-WORKDIR /go/src/app
-RUN git clone https://github.com/decred/dcrwallet.git 
-
-WORKDIR /go/src/app/dcrwallet
+WORKDIR $DCRSRC_PATH
+RUN git clone https://github.com/decred/dcrwallet.git
+WORKDIR $DCRSRC_PATH/dcrwallet
 
 ENV GO111MODULE=on
 RUN go get -d -v ./...
 RUN go install -v ./...
 
-WORKDIR /go/src/app/dcrd
+WORKDIR $DCRSRC_PATH/dcrd
 
 CMD ["dcrd"]

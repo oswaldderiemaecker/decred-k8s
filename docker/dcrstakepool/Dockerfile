@@ -1,33 +1,41 @@
 FROM golang:1.11.1
 
-WORKDIR /go/src/app
+RUN apt-get update ; apt-get install -y dnsutils wget telnet screen; apt-get clean
+
+RUN useradd -s /bin/bash -m -d /home/decred decred && chown -R decred:decred /home/decred
+ENV GOPATH=/home/decred/go
+ENV PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$GOPATH/bin
+ENV DCRSRC_PATH=$GOPATH/src/github.com/decred/
+RUN mkdir -p $GOPATH/src/github.com/decred/
+RUN chown -R decred:decred $GOPATH
+USER decred
+
+WORKDIR $DCRSRC_PATH
 RUN git clone https://github.com/decred/dcrd.git
-WORKDIR /go/src/app/dcrd
+WORKDIR $DCRSRC_PATH/dcrd
 RUN git checkout release-v1.4
 
 ENV GO111MODULE=on
 RUN go get -d -v ./...
 RUN go install . ./cmd/...
 
-WORKDIR /go/src/app
+WORKDIR $DCRSRC_PATH
 RUN git clone https://github.com/decred/dcrwallet.git
-WORKDIR /go/src/app/dcrwallet
+WORKDIR $DCRSRC_PATH/dcrwallet
 RUN git checkout release-v1.4
 
 ENV GO111MODULE=on
 RUN go get -d -v ./...
 RUN go install -v ./...
 
-WORKDIR /go/src/app
+WORKDIR $DCRSRC_PATH
 RUN git clone https://github.com/decred/dcrstakepool.git
-WORKDIR /go/src/app/dcrstakepool
+WORKDIR $DCRSRC_PATH/dcrstakepool
 
 RUN go build
 RUN go install -v ./...
 
-RUN apt-get update ; apt-get install -y dnsutils telnet screen; apt-get clean
-
-RUN mkdir ~/.dcrstakepool
-WORKDIR ~/.dcrstakepool
+RUN mkdir /home/decred/.dcrstakepool
+#WORKDIR /home/decred/.dcrstakepool
 
 CMD ["dcrstakepool"]
