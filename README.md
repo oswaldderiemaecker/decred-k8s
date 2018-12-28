@@ -112,6 +112,12 @@ minikube service list
 Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Pool site.
 Note: You may have to wait a minute.
 
+Alternatively you can use port-forward:
+
+kubectl port-forward dcrstakepool-nginx-0 4443:443
+
+and use https://localhost:4443/
+
 ## Scaling the Stakepool
 
 ```bash
@@ -142,7 +148,8 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 # Next Steps
 
 * When there is sleep, implement state verification instead
-* Deployment on AWS
+* Adding monitoring and alerting
+* Adding Backup and Restore
 
 # Issue Tracker
 
