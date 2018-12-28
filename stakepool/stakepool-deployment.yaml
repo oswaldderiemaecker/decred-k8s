@@ -44,7 +44,7 @@ spec:
             exec:
               command:
               - test
-              - '`find /root/alive.txt -mmin -1`'
+              - '`find /home/decred/alive -mmin -1`'
             initialDelaySeconds: 5
             periodSeconds: 15
           resources:
@@ -83,13 +83,13 @@ spec:
                 key: password
           volumeMounts:
             - name: voting-wallet-persistent-storage
-              mountPath: /root/.dcrwallet/
+              mountPath: /home/decred/.dcrwallet/
             - name: dcrd-persistent-storage
-              mountPath: /root/.dcrd/
+              mountPath: /home/decred/.dcrd/
             - name: stakepoold-bootscript
               mountPath: /usr/local/bin/stakepoold
           command: ['sh', '-c']
-          args: 
+          args:
             - sh /usr/local/bin/stakepoold/stakepool-boot.sh
       volumes:
         - name: voting-wallet-persistent-storage

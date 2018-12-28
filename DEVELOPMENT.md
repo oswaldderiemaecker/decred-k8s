@@ -81,5 +81,5 @@ dcrctl -u $RPC_USER -P $RPC_PASS $TESTNET --wallet purchaseticket "default" 100 
 You may have to unlock your wallet:
 
 ```bash
-promptsecret | dcrctl -u $RPC_USER -P $RPC_PASS --testnet --wallet walletpassphrase - 0
+promptsecret | dcrctl -u $RPC_USER -P $RPC_PASS $TESTNET --wallet walletpassphrase - 0
 ```

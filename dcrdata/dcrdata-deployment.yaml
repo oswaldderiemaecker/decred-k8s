@@ -62,7 +62,7 @@ spec:
             exec:
               command:
               - test
-              - '`find /home/decred/alive.txt -mmin -1`'
+              - '`find /home/decred/alive -mmin -1`'
             initialDelaySeconds: 5
             periodSeconds: 15
           resources:
@@ -95,7 +95,7 @@ spec:
             - name: dcrdata-bootscript
               mountPath: /usr/local/bin/dcrdata-bootscript
           command: ['sh', '-c']
-          args: 
+          args:
             - sh /usr/local/bin/dcrdata-bootscript/dcrdata-bootscript.sh
       volumes:
         - name: dcrdata-persistent-storage
