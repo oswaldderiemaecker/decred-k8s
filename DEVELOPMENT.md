@@ -14,7 +14,7 @@ kubectl get pods -n cold-wallet
 ## Creating the Decred wallet
 
 ```bash
-kubectl exec -ti cold-wallet-0 -n cold-wallet -- sh -c '/go/bin/dcrwallet --create $TESTNET'
+kubectl exec -ti cold-wallet-0 -n cold-wallet -- sh -c '/home/decred/go/bin/dcrwallet --create $TESTNET'
 ```
 
 ## Starting the Decred wallets

@@ -20,6 +20,7 @@ Refer to the [DEVELOPMENT.md](https://github.com/oswaldderiemaecker/dcrstakepool
 ```bash
 minikube start --cpus 4 --memory 4096 --disk-size 30GB
 ```
+
 ## Configuration
 
 Create a file variables.sh based on the [sample_variables.sh](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/dcrstakepool/sample_variables.sh) and set the value.
