@@ -70,7 +70,7 @@ spec:
         - mountPath: /etc/nginx/ssl
           name: secret-volume
         - mountPath: /etc/nginx/conf.d
-          name: configmap-volume
+          name: dcrstakepool-nginx-config
         command: ['sh', '-c']
         args:
           - /home/auto-reload-nginx.sh
@@ -78,9 +78,9 @@ spec:
       - name: secret-volume
         secret:
           secretName: nginxsecret
-      - name: configmap-volume
+      - name: dcrstakepool-nginx-config
         configMap:
-          name: nginxconfigmap
+          name: dcrstakepool-nginx-config
 ---
 apiVersion: apps/v1
 kind: StatefulSet
