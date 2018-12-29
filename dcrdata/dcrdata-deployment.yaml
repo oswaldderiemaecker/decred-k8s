@@ -5,7 +5,7 @@ metadata:
   labels:
     app: dcrdata
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 7777
       name: dcrdata
@@ -66,8 +66,8 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 15
           resources:
-            requests:
-              cpu: "2"
+            #requests:
+              #cpu: "2"
             #limits:
               #memory: "7G"
               #memory: "2G"

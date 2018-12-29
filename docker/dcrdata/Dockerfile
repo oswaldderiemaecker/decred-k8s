@@ -1,7 +1,10 @@
-FROM golang:1.11-alpine3.8
+FROM golang:1.11.1
 
-RUN apk update && apk add vim tree lsof bash git gcc musl-dev
-RUN adduser -s /bin/bash -D -h /home/decred decred && chown -R decred:decred /home/decred
+RUN apt-get update && apt-get install -y vim tree lsof git gcc musl-dev jq curl dnsutils
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+RUN apt-get install -y nodejs
+
+RUN useradd --shell /bin/bash decred -m && chown -R decred:decred /home/decred
 ENV GOPATH=/home/decred/go
 ENV PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$GOPATH/bin
 ENV DCRSRC_PATH=$GOPATH/src/github.com/decred/
@@ -25,9 +28,6 @@ WORKDIR $DCRSRC_PATH/dcrdata
 USER decred
 RUN go build
 RUN go install
-
-USER root
-RUN apk add nodejs npm
 
 USER decred
 RUN npm install
