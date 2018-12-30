@@ -24,7 +24,8 @@ minikube start --cpus 4 --memory 4096 --disk-size 30GB
 Follow the [AWS](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/AWS.md) instructions.
 
 # Deployments
-The current deployments are currently available:
+
+The deployments currently available:
 
 * [cold-wallet](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/tree/master/cold-wallet)
 * [dcrstakepool](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/tree/master/dcrstakepool)
