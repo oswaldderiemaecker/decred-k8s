@@ -25,6 +25,13 @@ Or more if you can.
 minikube start --cpus 6 --memory 10240 --disk-size 50GB
 ```
 
+To access with docker run:
+
+```bash
+minikube docker-env
+eval $(minikube docker-env)
+```
+
 ## AWS
 
 Follow the [AWS](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/AWS.md) instructions.

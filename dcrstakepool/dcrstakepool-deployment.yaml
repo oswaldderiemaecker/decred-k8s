@@ -74,6 +74,10 @@ spec:
         command: ['sh', '-c']
         args:
           - /home/auto-reload-nginx.sh
+      #initContainers:
+      #- name: init-backend
+      #  image: busybox
+      #  command: ['sh', '-c', 'until curl http://dcrstakepool-node:8000; do echo waiting for back-end; sleep 2; done;']
       volumes:
       - name: secret-volume
         secret:
