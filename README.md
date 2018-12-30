@@ -2,10 +2,14 @@
 
 # Decred Kubernetes
 
-* dcrstakepool
-* cold-wallet
-* dcrdata
-* politeia
+This repo is to deploy the various Decred software using Kubernetes to provide development and hopefully in production environments when everything is settle.
+
+The current deployments are currently available:
+
+* [cold-wallet](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/tree/master/cold-wallet)
+* [dcrstakepool](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/tree/master/dcrstakepool)
+* [dcrdata](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/tree/master/dcrdata)
+* politeia (ongoing)
 
 # Deploying the infrastructure on AWS
 
