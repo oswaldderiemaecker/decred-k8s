@@ -36,7 +36,6 @@ NOTE: Replace with your own docker repository.
 Creation of the mysql and stakepool deployments.
 
 ```bash
-cd ../dcrstakepool
 ./dcrstart.sh --init
 kubectl create -f ./mysql/mysql-deployment.yaml --save-config=true
 kubectl create -f ./stakepool/stakepool-deployment.yaml --save-config=true
@@ -102,7 +101,9 @@ Note: You may have to wait a minute.
 
 Alternatively you can use port-forward:
 
+```bash
 kubectl port-forward dcrstakepool-nginx-0 4443:443
+```
 
 and use https://localhost:4443/
 

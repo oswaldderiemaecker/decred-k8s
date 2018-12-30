@@ -44,6 +44,7 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 
 # Next Steps
 
+* Use kubedb for database
 * Adding Politeia
 * Adding DcrTime
 * Adding monitoring and alerting

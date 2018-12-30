@@ -29,11 +29,11 @@ dcrstakepool_upload_cert(){
   do
     echo $pod
     echo "Getting Wallet Certs"
-    kubectl cp $pod:/home/decred/.dcrwallet/rpc.cert ./certs/dcrwallet/$pod.cert
-    kubectl cp ./certs/dcrwallet/$pod.cert $dcrstakepool_pod:/home/decred/certs/dcrwallet/$pod.cert
+    kubectl cp $pod:/home/decred/.dcrwallet/rpc.cert ./certs/dcrwallet/$pod.cert || { echo 'A problem occured, please retry.' ; exit 1; }
+    kubectl cp ./certs/dcrwallet/$pod.cert $dcrstakepool_pod:/home/decred/certs/dcrwallet/$pod.cert || { echo 'A problem occured, please retry.' ; exit 1; }
     echo "Getting Pool Stake Certs"
-    kubectl cp $pod:/home/decred/.stakepoold/rpc.cert ./certs/stakepoold/$pod.cert
-    kubectl cp ./certs/stakepoold/$pod.cert $dcrstakepool_pod:/home/decred/certs/stakepoold/$pod.cert
+    kubectl cp $pod:/home/decred/.stakepoold/rpc.cert ./certs/stakepoold/$pod.cert || { echo 'A problem occured, please retry.' ; exit 1; }
+    kubectl cp ./certs/stakepoold/$pod.cert $dcrstakepool_pod:/home/decred/certs/stakepoold/$pod.cert || { echo 'A problem occured, please retry.' ; exit 1; }
     wallet_certs=$wallet_certs"/home/decred/certs/dcrwallet/$pod.cert "
     stakepool_certs=$stakepool_certs"/home/decred/certs/stakepoold/$pod.cert "
   done
