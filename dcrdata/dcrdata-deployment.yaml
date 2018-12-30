@@ -82,6 +82,11 @@ spec:
               secretKeyRef:
                 name: rpc-pass
                 key: password
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pgsql-pass
+                key: password
           - name: TESTNET
             valueFrom:
               configMapKeyRef:
@@ -107,3 +112,76 @@ spec:
         - name: dcrdata-bootscript
           configMap:
             name: dcrdata-bootscript
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dcrdata-pgsql
+  labels:
+    app: dcrdata-pgsql
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: dcrdata-pgsql
+    tier: pgsql
+  clusterIP: None
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pgsql-pv-claim
+  labels:
+    app: dcrdata-pgsql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: dcrdata-pgsql
+  labels:
+    app: dcrdata-pgsql
+spec:
+  serviceName: pgsql
+  selector:
+    matchLabels:
+      app: dcrdata-pgsql
+      tier: pgsql
+  template:
+    metadata:
+      labels:
+        app: dcrdata-pgsql
+        tier: pgsql
+    spec:
+      containers:
+      - image: postgres:11
+        name: pgsql
+        readinessProbe:
+          initialDelaySeconds: 5
+          tcpSocket:
+            port: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "dcrdata"
+        - name: POSTGRES_USER
+          value: "dcrdata"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgsql-pass
+              key: password
+        ports:
+        - containerPort: 5432
+          name: pgsql
+        volumeMounts:
+        - name: pgsql-persistent-storage
+          mountPath: /var/lib/pgsql
+      volumes:
+      - name: pgsql-persistent-storage
+        persistentVolumeClaim:
+          claimName: pgsql-pv-claim
