@@ -2,7 +2,7 @@
 
 # Decred Kubernetes
 
-This repo is to deploy the various Decred software using Kubernetes to provide development and hopefully production environments when everything is settle.
+This repo is to deploy the various Decred projects using Kubernetes to provide development and hopefully production environments when everything is settle.
 
 # Requirements
 
