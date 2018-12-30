@@ -48,6 +48,8 @@ Getting all stakepool pods:
 kubectl get pods -l app=stakepoold-node
 ```
 
+**Wait that both stakepool nodes are Running.**
+
 For each pods run:
 ```bash
 kubectl exec -ti stakepoold-node-X -- sh -c '/home/decred/go/bin/dcrwallet --create $TESTNET'
