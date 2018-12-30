@@ -1,6 +1,6 @@
 FROM golang:1.11.1
 
-RUN apt-get update ; apt-get install -y dnsutils wget telnet screen; apt-get clean
+RUN apt-get update ; apt-get install -y dnsutils curl jq telnet screen; apt-get clean
 
 RUN useradd -s /bin/bash -m -d /home/decred decred && chown -R decred:decred /home/decred
 ENV GOPATH=/home/decred/go

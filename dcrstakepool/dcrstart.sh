@@ -90,8 +90,8 @@ init(){
     kubectl create secret tls nginxsecret --key dcrpoolstake.key --cert dcrpoolstake.crt
   fi
   echo "Setting nginx configuration"
-  kubectl delete configmap nginxconfigmap
-  kubectl create configmap nginxconfigmap --from-file=nginx.conf
+  kubectl delete configmap dcrstakepool-nginx-config
+  kubectl create configmap dcrstakepool-nginx-config --from-file=nginx.conf
   echo "Setting stakepool-boot script"
   kubectl delete configmap dcrstakepool-bootscript
   kubectl create configmap dcrstakepool-bootscript --from-file=dcrstakepool-boot.sh
