@@ -28,15 +28,16 @@ Create a file variables.sh based on the [sample_variables.sh](https://github.com
 ## Building the docker images
 
 ```bash
-cd docker/nginx/
+cd ../docker/nginx/
 docker build -t oswald/nginx .
 docker push oswald/nginx:latest
 
-cd ../stakepoold
+cd dcrstakepool
+cd ./docker/stakepoold
 docker build -t oswald/stakepoold .
 docker push oswald/stakepoold:latest
 
-cd ../dcrstakepool
+cd ./docker/dcrstakepool
 docker build -t oswald/dcrstakepool .
 docker push oswald/dcrstakepool:latest
 ```
@@ -51,7 +52,7 @@ Creation of the mysql and stakepool deployments.
 cd ../dcrstakepool
 ./dcrstart.sh --init
 kubectl create -f ./mysql/mysql-deployment.yaml --save-config=true
-kubectl create -f ../stakepool/stakepool-deployment.yaml --save-config=true
+kubectl create -f ./stakepool/stakepool-deployment.yaml --save-config=true
 ```
 
 Once the stakepool is deployed, you will need to configure the wallets for each stakepool pods:

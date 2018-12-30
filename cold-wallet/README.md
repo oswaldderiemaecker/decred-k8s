@@ -1,5 +1,13 @@
 # Decred Wallet
 
+## Building the docker images
+
+```bash
+cd ./docker/dcrwallet/
+docker build -t oswald/dcrwallet .
+docker push oswald/dcrwallet:latest
+```
+
 ## Starting the Decred Wallet
 ```bash
 kubectl create namespace cold-wallet

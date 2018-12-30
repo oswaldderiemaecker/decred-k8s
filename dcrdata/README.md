@@ -1,5 +1,15 @@
 # DcrData
 
+## Building the docker images
+
+```bash
+cd ./docker/dcrdata/
+docker build -t oswald/dcrdata .
+docker push oswald/dcrdata:latest
+```
+
+NOTE: Replace with your own docker repository.
+
 # Configuration
 
 ```bash
