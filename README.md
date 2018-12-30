@@ -51,6 +51,7 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 
 # Next Steps
 
+* Adding InitContainer on DcrStakepool nginx to wait for Stakopool availability
 * Use kubedb for database
 * Adding Politeia
 * Adding DcrTime
