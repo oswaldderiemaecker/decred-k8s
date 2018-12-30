@@ -1,5 +1,7 @@
 # DcrData
 
+[DcrData](https://github.com/decred/dcrdata) is the Decred block explorer, with packages and apps for data collection and storage. Written in Go. 
+
 ## Building the docker images
 
 ```bash
