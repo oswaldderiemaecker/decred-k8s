@@ -65,7 +65,7 @@ dcrstakepool_update_config(){
 
   echo "Setting Cold Wallet Extended Public Key"
   kubectl delete secret coldwalletextpub
-  kubectl create secret generic coldwalletextpub --from-literal=coldwalletextpub=tpubVoda63Jgvu4uD2teFyoKDQih7hYwvjjYfhxLCgCsqbswmXxXKopDNPF5SR3i598ATR55zNDre9MkjR8vvSC2SzM1snJYG5obkagZJyBcvgi
+  kubectl create secret generic coldwalletextpub --from-literal=coldwalletextpub=YOUR_COLD_WALLET_EXT_PUB
 
   # Generating wallet-certs and stakepool-certs names
   for pod in $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[*].metadata.name}")
@@ -131,9 +131,9 @@ init(){
   kubectl delete secret mysql-pass
   kubectl create secret generic mysql-pass --from-literal=password=$MYSQL_PASS
   kubectl delete configmap mysql-bootstrap
-  kubectl create configmap mysql-bootstrap --from-file=../mysql/bootstrap.sql
+  kubectl create configmap mysql-bootstrap --from-file=./mysql/bootstrap.sql
   kubectl delete configmap mysql-bootscript
-  kubectl create configmap mysql-bootscript --from-file=../mysql/mysql-bootscript.sh
+  kubectl create configmap mysql-bootscript --from-file=./mysql/mysql-bootscript.sh
 
   echo "Setting Stakepoold"
   echo "- Setting Mysql Stakepool Pass to ******"
@@ -155,7 +155,7 @@ init(){
 
 mysql_deployment(){
   echo "$1 Mysql deployment"
-  kubectl $1 -f ../mysql/mysql-deployment.yaml
+  kubectl $1 -f ./mysql/mysql-deployment.yaml
 }
 
 stakepool_deployment(){

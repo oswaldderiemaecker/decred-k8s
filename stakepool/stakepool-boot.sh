@@ -32,4 +32,4 @@ echo "$(date) - Starting Stake pool"
 touch /home/decred/alive
 
 #sleep 40000 #debug
-stakepoold --dbhost=mysql --dbuser=stakepool --dbpassword=$STAKEPOOL_MYSQL_DB_PASSWORD --coldwalletextpub=$COLD_WALLET_EXT_PUB --dcrdhost=127.0.0.1 --dcrduser=$DCR_RPC_USER --dcrdpassword=$DCR_RPC_PASS --testnet --dcrdcert=/home/decred/.dcrd/rpc.cert --wallethost=$(hostname --ip-address) --walletcert=/home/decred/.dcrwallet/rpc.cert --walletuser=$DCR_RPC_USER --walletpassword=$DCR_RPC_PASS --rpclisten=$(hostname --ip-address) $TESTNET
+stakepoold --dbhost=dcrstakepool-mysql --dbuser=stakepool --dbpassword=$STAKEPOOL_MYSQL_DB_PASSWORD --coldwalletextpub=$COLD_WALLET_EXT_PUB --dcrdhost=127.0.0.1 --dcrduser=$DCR_RPC_USER --dcrdpassword=$DCR_RPC_PASS --testnet --dcrdcert=/home/decred/.dcrd/rpc.cert --wallethost=$(hostname --ip-address) --walletcert=/home/decred/.dcrwallet/rpc.cert --walletuser=$DCR_RPC_USER --walletpassword=$DCR_RPC_PASS --rpclisten=$(hostname --ip-address) $TESTNET

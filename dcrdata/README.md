@@ -1,11 +1,12 @@
-# Configure DcrData
+# DcrData
+
+# Configuration
 
 ```bash
 kubectl delete configmap dcrdata-bootscript
 kubectl create configmap dcrdata-bootscript --from-file=dcrdata-bootscript.sh
 ```
-
-# Creating DcrData deployment
+# DcrData Deployment
 
 ```bash
 kubectl create -f dcrdata-deployment.yaml
