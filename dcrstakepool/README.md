@@ -6,7 +6,7 @@
 
 This repo is to install the Decred Stakepool using Kubernetes and provide development and hopefully in production environments when everything is settle.
 
-Refer to the [DEVELOPMENT.md](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/DEVELOPMENT.md) for the Ticket Purchasing testing.
+Refer to the [Cold-wallet README](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/cold-wallet/README.md) for the Ticket Purchasing testing.
 
 # Requirements
 
