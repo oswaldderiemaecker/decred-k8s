@@ -4,10 +4,11 @@ mkdir -p /home/decred/certs/dcrwallet /home/decred/certs/stakepoold
 
 cd /home/decred/go/src/github.com/decred/dcrstakepool
 
-echo "Set DCR_RPC_USER and DCR_RPC_PASS"
-
 unset $DCRSTAKE_POOL_DCR_RPC_USER
 unset $DCRSTAKE_POOL_DCR_RPC_PASS
+
+echo "Processing wallet hosts: $WALLET_HOSTS"
+echo "Set DCR_RPC_USER and DCR_RPC_PASS"
 
 for host in $(echo $WALLET_HOSTS | sed "s/,/ /g")
 do
@@ -30,14 +31,19 @@ done
 # Fix the hidden chars
 export VOTING_WALLET_EXT_PUB=$(echo $VOTING_EXT_PUB | sed $'s/[^[:print:]\t]//g')
 
+# debug
+#echo "DCR_RPC_USER: $DCRSTAKE_POOL_DCR_RPC_USER"
+#echo "DCR_RPC_PASS; $DCRSTAKE_POOL_DCR_RPC_PASS"
+#echo "VOTING WALLET EXT PUB: $VOTING_WALLET_EXT_PUB"
+
 # Wait while Wallet created
 while [ ! -f /home/decred/certs/stakepoold/*.cert ]
 do
-    echo "$(date) - Please upload the Certificates with: ./dcrstart.sh --upload-cert"
+  echo "$(date) - Please upload the Certificates with: ./dcrstart.sh --upload-cert"
   sleep 10
 done
 
-sleep 20
+sleep 30
 
 # Set Readiness Probe Test
 touch /home/decred/alive

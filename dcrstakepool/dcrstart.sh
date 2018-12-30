@@ -51,7 +51,7 @@ dcrstakepool_upload_cert(){
 }
 
 dcrstakepool_update_config(){
-  sleep 10
+  source ./variables.sh
   echo "Processing Wallets Hosts ..."
   stakepoold_node_ips=$(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[*].status.podIP}" | sed -e "s/ /,/g" )
   kubectl delete configmap wallet-hosts
@@ -61,11 +61,16 @@ dcrstakepool_update_config(){
   votingwalletextpub=$(kubectl exec -ti $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[0].metadata.name}") -c stakepoold -- /bin/bash -c '/home/decred/go/bin/dcrctl --wallet $TESTNET -u test -P test --rpcserver=$(hostname --ip-address) getmasterpubkey default')
 
   kubectl delete secret votingwalletextpub
-  kubectl create secret generic votingwalletextpub --from-literal=votingextpub=$votingwalletextpub
+  if [ -z $votingwalletextpub ]
+  then
+    echo "Please re-run Voting Wallet Extended Public isn't set yet"
+  else
+    kubectl create secret generic votingwalletextpub --from-literal=votingextpub=$(echo -e $votingwalletextpub)
+  fi
 
   echo "Setting Cold Wallet Extended Public Key"
   kubectl delete secret coldwalletextpub
-  kubectl create secret generic coldwalletextpub --from-literal=coldwalletextpub=YOUR_COLD_WALLET_EXT_PUB
+  kubectl create secret generic coldwalletextpub --from-literal=coldwalletextpub=$YOUR_COLD_WALLET_EXT_PUB
 
   # Generating wallet-certs and stakepool-certs names
   for pod in $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[*].metadata.name}")
@@ -89,6 +94,9 @@ init(){
     kubectl delete secret nginxsecret
     kubectl create secret tls nginxsecret --key dcrpoolstake.key --cert dcrpoolstake.crt
   fi
+
+  kubectl get secret nginxsecret || { echo 'Nginx Certificates not set' ; exit 1; }
+
   echo "Setting nginx configuration"
   kubectl delete configmap dcrstakepool-nginx-config
   kubectl create configmap dcrstakepool-nginx-config --from-file=nginx.conf
@@ -140,7 +148,7 @@ init(){
   kubectl delete secret stakepool-mysql-pass
   kubectl create secret generic stakepool-mysql-pass --from-literal=password=$STAKEPOOL_MYSQL_PASS
   kubectl delete configmap stakepoold-bootscript
-  kubectl create configmap stakepoold-bootscript --from-file=../stakepool/stakepool-boot.sh
+  kubectl create configmap stakepoold-bootscript --from-file=./stakepool/stakepool-boot.sh
   kubectl delete secret rpc-user
   kubectl create secret generic rpc-user --from-literal=user=$RPC_USER
   kubectl delete secret rpc-pass

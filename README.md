@@ -19,6 +19,12 @@ This repo is to deploy the various Decred projects using Kubernetes to provide d
 minikube start --cpus 4 --memory 4096 --disk-size 30GB
 ```
 
+Or more if you can.
+
+```bash
+minikube start --cpus 6 --memory 10240 --disk-size 50GB
+```
+
 ## AWS
 
 Follow the [AWS](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/blob/master/AWS.md) instructions.
