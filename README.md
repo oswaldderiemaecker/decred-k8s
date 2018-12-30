@@ -38,7 +38,7 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 
 # Next Steps
 
-* Adding politeia
+* Adding Politeia
 * Adding DcrTime
 * Adding monitoring and alerting
 * Adding Backup and Restore

@@ -1,6 +1,8 @@
+# **Experimental - Under Development - Use at your own risk**
+
 # Decred Wallet
 
-[DcrWallet](https://github.com/decred/dcrwallet) is the secure Decred wallet daemon written in Go (golang). 
+[DcrWallet](https://github.com/decred/dcrwallet) is the secure Decred wallet daemon written in Go (golang).
 
 ## Building the docker images
 
