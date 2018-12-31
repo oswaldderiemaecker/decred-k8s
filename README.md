@@ -55,6 +55,9 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 * Use kubedb for database
 * Adding Politeia
 * Adding DcrTime
+* Adding gominer
+* Adding dcrlnd (Decred Lightning Network Daemon)
+* Adding dcr-netstats
 * Adding monitoring and alerting
 * Adding Backup and Restore
 

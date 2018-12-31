@@ -45,7 +45,7 @@ Once the stakepool is deployed, you will need to configure the wallets for each 
 
 Getting all stakepool pods:
 ```bash
-kubectl get pods -l app=stakepoold-node
+kubectl get pods -l app=stakepoold-node --watch
 ```
 
 **Wait that both stakepool nodes are Running.**
@@ -74,7 +74,7 @@ kubectl create -f dcrstakepool-deployment.yaml --save-config=true
 Look at the logs when the deployment is ready:
 
 ```bash
-kubectl logs dcrstakepool-node-0
+kubectl logs dcrstakepool-node-0 --watch
 ...
 Please upload the Certificates with: ./dcrstart.sh --upload-cert
 ...

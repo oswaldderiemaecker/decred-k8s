@@ -1,6 +1,6 @@
 # DcrData
 
-[DcrData](https://github.com/decred/dcrdata) is the Decred block explorer, with packages and apps for data collection and storage. Written in Go. 
+[DcrData](https://github.com/decred/dcrdata) is the Decred block explorer, with packages and apps for data collection and storage. Written in Go.
 
 ## Building the docker images
 
@@ -17,6 +17,8 @@ NOTE: Replace with your own docker repository.
 ```bash
 kubectl delete configmap dcrdata-bootscript
 kubectl create configmap dcrdata-bootscript --from-file=dcrdata-bootscript.sh
+kubectl delete secret pgsql-pass
+kubectl create secret generic pgsql-pass --from-literal=password=YOUR_PASSWORD
 ```
 # DcrData Deployment
 
