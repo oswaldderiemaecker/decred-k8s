@@ -67,6 +67,8 @@ The integrated [github issue](https://github.com/oswaldderiemaecker/dcrstakepool
 
 # Donation
 
+If you find this useful, please consider donating as a thank you.
+
 Decred: DsapyQpgWyaBniJrkSXhh9CALWNLVLWtKrr
 
 # Version History
