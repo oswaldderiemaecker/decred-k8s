@@ -65,6 +65,10 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 
 The integrated [github issue](https://github.com/oswaldderiemaecker/dcrstakepool-k8s/issues) tracker is used for this project.
 
+# Donation
+
+Decred: DsapyQpgWyaBniJrkSXhh9CALWNLVLWtKrr
+
 # Version History
 
 * 0.1.2  Added DrcData and Reorganized by projects
