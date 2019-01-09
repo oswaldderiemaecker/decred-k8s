@@ -53,6 +53,7 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 
 * Adding InitContainer on DcrStakepool nginx to wait for Stakopool availability
 * Use kubedb for database
+* Use skaffold for development
 * Adding Politeia
 * Adding DcrTime
 * Adding gominer
@@ -67,7 +68,7 @@ The integrated [github issue](https://github.com/oswaldderiemaecker/dcrstakepool
 
 # Donation
 
-If you find this useful, please consider donating as a thank you.
+If you find this useful, please consider donating as a thank you
 
 Decred: DsapyQpgWyaBniJrkSXhh9CALWNLVLWtKrr
 
