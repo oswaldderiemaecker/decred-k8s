@@ -33,22 +33,30 @@ NOTE: Replace with your own docker repository.
 
 ## Creating the infrastructure
 
-Creation of the mysql and stakepool deployments.
+Creation of the mysql deployments.
 
 ```bash
 cd ../..
 ./dcrstart.sh --init
 kubectl create -f ./mysql/mysql-deployment.yaml --save-config=true
-kubectl get pods # dcrstakepool-mysql-0   1/1     Running
+kubectl get pods -l app=dcrstakepool-mysql --watch
+```
+Wait till the READY state is 1/1 STATUS Running. Then press CTRL-C.
+
+Create the stakepool deployments.
+
+```bash
 kubectl create -f ./stakepool/stakepool-deployment.yaml --save-config=true
 ```
-
-Once the stakepool is deployed, you will need to configure the wallets for each stakepool pods:
 
 Getting all stakepool pods:
 ```bash
 kubectl get pods -l app=stakepoold-node --watch
 ```
+
+Wait till all stakepool pods are READY state is 1/1 STATUS Running. Then press CTRL-C.
+
+Once the stakepool is deployed, you will need to configure the wallets for each stakepool pods:
 
 **Wait that both stakepool nodes are Running.**
 
@@ -71,9 +79,12 @@ You are now ready to create the Decred Stakepool deployment with:
 
 ```bash
 kubectl create -f dcrstakepool-deployment.yaml --save-config=true
+kubectl get pods --watch
 ```
 
-Look at the logs when the deployment is ready:
+Wait till all READY states are 1/1 STATUS Running. Then press CTRL-C.
+
+Look at the logs till you get the following message:
 
 ```bash
 kubectl logs dcrstakepool-node-0 -f --tail=20
@@ -101,7 +112,7 @@ minikube service list
 ```
 
 Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Pool site.
-Note: You may have to wait a minute.
+Note: You may have to wait a minute or so.
 
 Alternatively you can use port-forward:
 

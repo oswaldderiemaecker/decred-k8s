@@ -20,8 +20,10 @@ kubectl create secret -n cold-wallet generic rpc-user --from-literal=user=YOUR_U
 kubectl create secret -n cold-wallet generic rpc-pass --from-literal=password=YOUR_PASSWORD
 kubectl get secrets -n cold-wallet
 kubectl create -f cold-wallet-deployment.yaml --save-config
-kubectl get pods -n cold-wallet
+kubectl get pods -n cold-wallet --watch
 ```
+
+Wait till the READY state is 1/1 STATUS Running. Then press CTRL-C.
 
 ## Creating the Decred wallet
 
