@@ -19,12 +19,12 @@ cd ../docker/nginx/
 docker build -t oswald/nginx .
 docker push oswald/nginx:latest
 
-cd dcrstakepool
+cd ../../dcrstakepool/
 cd ./docker/stakepoold
 docker build -t oswald/stakepoold .
 docker push oswald/stakepoold:latest
 
-cd ./docker/dcrstakepool
+cd ../dcrstakepool/
 docker build -t oswald/dcrstakepool .
 docker push oswald/dcrstakepool:latest
 ```
@@ -36,8 +36,10 @@ NOTE: Replace with your own docker repository.
 Creation of the mysql and stakepool deployments.
 
 ```bash
+cd ../..
 ./dcrstart.sh --init
 kubectl create -f ./mysql/mysql-deployment.yaml --save-config=true
+kubectl get pods # dcrstakepool-mysql-0   1/1     Running
 kubectl create -f ./stakepool/stakepool-deployment.yaml --save-config=true
 ```
 
@@ -74,7 +76,7 @@ kubectl create -f dcrstakepool-deployment.yaml --save-config=true
 Look at the logs when the deployment is ready:
 
 ```bash
-kubectl logs dcrstakepool-node-0 --watch
+kubectl logs dcrstakepool-node-0 -f --tail=20
 ...
 Please upload the Certificates with: ./dcrstart.sh --upload-cert
 ...

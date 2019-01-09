@@ -16,13 +16,13 @@ This repo is to deploy the various Decred projects using Kubernetes to provide d
 ## Minikuke
 
 ```bash
-minikube start --cpus 4 --memory 4096 --disk-size 30GB
+minikube start --cpus 4 --memory 4096 --disk-size 30GB --kubernetes-version v1.10.0
 ```
 
 Or more if you can.
 
 ```bash
-minikube start --cpus 6 --memory 10240 --disk-size 50GB
+minikube start --cpus 6 --memory 10240 --disk-size 50GB --kubernetes-version v1.10.0
 ```
 
 To access with docker run:

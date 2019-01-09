@@ -58,7 +58,7 @@ dcrstakepool_update_config(){
   kubectl create configmap wallet-hosts --from-literal=hosts=$stakepoold_node_ips
 
   echo "Getting Wallet Extended Public Key"
-  votingwalletextpub=$(kubectl exec -ti $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[0].metadata.name}") -c stakepoold -- /bin/bash -c '/home/decred/go/bin/dcrctl --wallet $TESTNET -u test -P test --rpcserver=$(hostname --ip-address) getmasterpubkey default')
+  votingwalletextpub=$(kubectl exec -ti $(kubectl get pods -l app=stakepoold-node -o jsonpath="{.items[0].metadata.name}") -c stakepoold -- /bin/bash -c '/home/decred/go/bin/dcrctl --wallet $TESTNET -u $DCR_RPC_USER -P $DCR_RPC_PASS --rpcserver=$(hostname --ip-address) getmasterpubkey default')
 
   kubectl delete secret votingwalletextpub
   if [ -z $votingwalletextpub ]
