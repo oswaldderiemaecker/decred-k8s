@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dcrdata
+  namespace: dcrdata
   labels:
     app: dcrdata
 spec:
@@ -16,6 +17,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: dcrd-dcrdata-pv-claim
+  namespace: dcrdata
   labels:
     app: dcrdata
 spec:
@@ -29,6 +31,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: dcrdata-pv-claim
+  namespace: dcrdata
   labels:
     app: dcrdata
 spec:
@@ -42,6 +45,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: dcrdata
+  namespace: dcrdata
   labels:
     app: dcrdata
 spec:
@@ -75,12 +79,12 @@ spec:
           - name: RPC_USER
             valueFrom:
               secretKeyRef:
-                name: rpc-user
+                name: dcrdata-rpc-user
                 key: user
           - name: RPC_PASS
             valueFrom:
               secretKeyRef:
-                name: rpc-pass
+                name: dcrdata-rpc-pass
                 key: password
           - name: POSTGRES_PASSWORD
             valueFrom:
@@ -117,6 +121,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dcrdata-pgsql
+  namespace: dcrdata
   labels:
     app: dcrdata-pgsql
 spec:
@@ -131,6 +136,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pgsql-pv-claim
+  namespace: dcrdata
   labels:
     app: dcrdata-pgsql
 spec:
@@ -144,6 +150,7 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: StatefulSet
 metadata:
   name: dcrdata-pgsql
+  namespace: dcrdata
   labels:
     app: dcrdata-pgsql
 spec:
