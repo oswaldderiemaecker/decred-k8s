@@ -6,9 +6,9 @@ This repo is to deploy the various Decred projects using Kubernetes to provide d
 
 # Requirements
 
-* minikube version: v0.31.0
-* Docker version 18.09.0, build 4d60db4
-* Kubernetes Client Version: v1.13.1
+* [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) version: v0.31.0
+* Docker Client version 18.09.0, build 4d60db4
+* [Kubernetes Client](https://kubernetes.io/docs/tasks/tools/install-kubectl/) Version: v1.13.1
 * Kubernetes Server Version: v1.10.0
 
 # Kubernetes Environment
