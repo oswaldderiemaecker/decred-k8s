@@ -39,7 +39,7 @@ Creation of the mysql deployments.
 cd ../..
 ./dcrstart.sh --init
 kubectl create -f ./mysql/mysql-deployment.yaml --save-config=true
-kubectl get pods -l app=dcrstakepool-mysql --watch
+kubectl get pods -l app=dcrstakepool-mysql -n dcrstakepool --watch
 ```
 Wait till the READY state is 1/1 STATUS Running. Then press CTRL-C.
 
@@ -51,7 +51,7 @@ kubectl create -f ./stakepool/stakepool-deployment.yaml --save-config=true
 
 Getting all stakepool pods:
 ```bash
-kubectl get pods -l app=stakepoold-node --watch
+kubectl get pods -l app=stakepoold-node -n dcrstakepool --watch
 ```
 
 Wait till all stakepool pods are READY state is 1/1 STATUS Running. Then press CTRL-C.
@@ -62,7 +62,7 @@ Once the stakepool is deployed, you will need to configure the wallets for each 
 
 For each pods run:
 ```bash
-kubectl exec -ti stakepoold-node-X -- sh -c '/home/decred/go/bin/dcrwallet --create $TESTNET'
+kubectl exec -ti stakepoold-node-X -n dcrstakepool -- sh -c '/home/decred/go/bin/dcrwallet --create $TESTNET'
 ```
 
 **IMPORTANT NOTE:** If its a first install, create the wallet with a new seed on the first stakepool pod, then on the second when asked if you like to use an existing wallet seed, provide the wallet seed created on the first one. For subsequant install you can use the wallet seed for all your stakepool node. Keep the wallet seed securly.
@@ -79,7 +79,7 @@ You are now ready to create the Decred Stakepool deployment with:
 
 ```bash
 kubectl create -f dcrstakepool-deployment.yaml --save-config=true
-kubectl get pods --watch
+kubectl get pods -n dcrstakepool --watch
 ```
 
 Wait till all READY states are 1/1 STATUS Running. Then press CTRL-C.
@@ -87,7 +87,7 @@ Wait till all READY states are 1/1 STATUS Running. Then press CTRL-C.
 Look at the logs till you get the following message:
 
 ```bash
-kubectl logs dcrstakepool-node-0 -f --tail=20
+kubectl logs dcrstakepool-node-0 -n dcrstakepool -f --tail=20
 ...
 Please upload the Certificates with: ./dcrstart.sh --upload-cert
 ...
@@ -111,8 +111,7 @@ minikube service list
 ...
 ```
 
-Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Pool site.
-Note: You may have to wait a minute or so.
+**NOTE: Use https://192.168.99.100:32110 (note the https) to connect to the DCR Stake Pool site. You may have to wait a minute or so.**
 
 Alternatively you can use port-forward:
 
@@ -125,14 +124,15 @@ and use https://localhost:4443/
 ## Scaling the Stakepool
 
 ```bash
-kubectl get statefulsets stakepoold-node
-kubectl scale statefulsets stakepoold-node --replicas=YOUR_NUMBER_OF_REPLICAS
+kubectl get statefulsets stakepoold-node -n dcrstakepool
+kubectl scale statefulsets stakepoold-node -n dcrstakepool --replicas=YOUR_NUMBER_OF_REPLICAS
+kubectl get pods -n dcrstakepool --watch
 ```
 
 Create the wallet on the new replica.
 
 ```bash
-kubectl exec -ti stakepoold-node-X -- sh -c '/go/bin/dcrwallet --create $TESTNET'
+kubectl exec -ti stakepoold-node-X -n dcrstakepool -- sh -c '/home/decred/go/bin/dcrwallet --create $TESTNET'
 ```
 
 Applying changes to your infrastructure
