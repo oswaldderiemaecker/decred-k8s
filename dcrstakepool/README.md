@@ -141,6 +141,12 @@ Applying changes to your infrastructure
 ./dcrstart.sh --apply
 ```
 
+## Deleting the deployment
+
+```bash
+./delete.sh
+```
+
 # Contribution
 
 All comments and contribution are welcome. You can contact me at oswald@continuous.lu
