@@ -52,6 +52,7 @@ All comments and contribution are welcome. You can contact me at oswald@continuo
 # Next Steps
 
 * Adding InitContainer on DcrStakepool nginx to wait for Stakopool availability
+* Make Dcrd an independent pod so that it can be deployed independently
 * Use kubedb for database
 * Use skaffold for development
 * Adding Politeia

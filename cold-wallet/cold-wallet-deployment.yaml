@@ -67,6 +67,7 @@ spec:
       containers:
         - name: cold-wallet
           image: oswald/dcrwallet:latest
+          imagePullPolicy: IfNotPresent
           env:
           - name: RPC_USER
             valueFrom:
@@ -89,8 +90,8 @@ spec:
             - name: dcrd-persistent-storage
               mountPath: /root/.dcrd/
           command: ['sh', '-c']
-          args: 
-            - dcrd -u $RPC_USER -P $RPC_PASS $TESTNET 
+          args:
+            - dcrd -u $RPC_USER -P $RPC_PASS $TESTNET
       volumes:
         - name: cold-wallet-persistent-storage
           persistentVolumeClaim:

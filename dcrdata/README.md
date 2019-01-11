@@ -10,7 +10,7 @@ docker build -t oswald/dcrdata .
 docker push oswald/dcrdata:latest
 ```
 
-NOTE: Replace with your own docker repository.
+**NOTE: Replace with your own docker repository.**
 
 # Configuration
 
@@ -42,4 +42,4 @@ minikube service list
 | default     | dcrdata-pgsql        | No node port                   |
 ```
 
-Use http://192.168.99.100:31047 to get access to the DcrData
+Use http://192.168.99.100:31047 to get access to the DcrData.

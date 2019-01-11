@@ -59,6 +59,7 @@ spec:
       containers:
       - name: nginx
         image: oswald/nginx:latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -113,6 +114,7 @@ spec:
       containers:
       - name: dcrstakepool
         image: oswald/dcrstakepool:latest
+        imagePullPolicy: IfNotPresent
         readinessProbe:
           exec:
             command:
